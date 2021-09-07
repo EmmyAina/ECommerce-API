@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,11 +39,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'Account',
+    'Category',
+   	'Auth',
+	'Product',
+    'corsheaders',
+    'rest_framework_simplejwt',
+    'rest_framework_swagger',
+    'django_heroku',
+   	"django_extensions",
+    "drf_yasg",
+   	'graphene_django',
+   	'celery',
+   	'debug_toolbar',
+   	'django_seed',
+   	'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+  	'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,8 +94,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+     			'NAME': config("BLGNAME"),
+     			'USER': config("BLGUSER"),
+     			'PASSWORD': config("BLGPASSWORD"),
+     			'HOST': "localhost",
+     			'PORT': '5432',
+     			'TEST': {
+                            'NAME': 'first_test_db',
+                        },
     }
 }
 
@@ -123,3 +149,23 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SWAGGER_SETTINGS = {
+    "DEFAULT_AUTO_SCHEMA_CLASS": "core.autoschema.CustomAutoSchema",
+
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+
+REST_FRAMEWORK = {
+
+	'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+	'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+
+}
+
