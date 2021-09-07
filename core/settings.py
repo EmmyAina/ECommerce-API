@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'Account',
     'Category',
    	'Auth',
+	'Cart',
 	'Product',
+	'Checkout',
     'corsheaders',
     'rest_framework_simplejwt',
     'rest_framework_swagger',
@@ -95,9 +97,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-     			'NAME': config("BLGNAME"),
-     			'USER': config("BLGUSER"),
-     			'PASSWORD': config("BLGPASSWORD"),
+     			'NAME': config("CONSTNAME"),
+     			'USER': config("CONSTUSER"),
+     			'PASSWORD': config("CONSTPASSWORD"),
      			'HOST': "localhost",
      			'PORT': '5432',
      			'TEST': {
@@ -105,6 +107,8 @@ DATABASES = {
                         },
     }
 }
+
+AUTH_USER_MODEL = 'Account.user'
 
 
 # Password validation
@@ -144,6 +148,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = str(BASE_DIR) + MEDIA_URL
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_URL = config("CLOUDINARY_URL")
+CLOUDINARY_STORAGE = {
+	'CLOUD_NAME': config("CLOUD_NAME"),
+	"API_KEY": config("CLOUD_API_KEY"),
+	"API_SECRET": config("CLOUD_API_SECRET")
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
