@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "drf_yasg",
    	'graphene_django',
    	'celery',
+	'stripe',
    	'debug_toolbar',
    	'django_seed',
    	'cloudinary_storage'
