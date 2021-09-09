@@ -47,7 +47,7 @@ urlpatterns = [
 	path("", include("Category.urls")),
 	path("", include("Cart.urls")),
    	path("", include("Product.urls")),
-   	# path("", include("Checkout.urls")),
+   	path("", include("Checkout.urls")),
    	*static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
 
