@@ -13,7 +13,6 @@ class Cart(models.Model):
 
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-
 	def __str__(self):
 		return f'{self.customer.email}'
 
@@ -41,7 +40,10 @@ class CartItem(models.Model):
 
 	def __str__(self):
 		return f'{self.product.product_name} {self.cart.customer.email}'
-
+	
+	def product_total(self):
+		product_total = self.product.product_price_ngn * self.quantity
+		return product_total
 
 # # Create your models here.
 # class Cart(models.Model):
