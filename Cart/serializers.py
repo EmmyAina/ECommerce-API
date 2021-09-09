@@ -19,17 +19,26 @@ class CartSerializer(serializers.ModelSerializer):
 		)
 
 
+class CartProductSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = Product
+		fields = (
+			'product_name', 'product_price_ngn',
+		)
+
+
 class CartItemSerializer(serializers.ModelSerializer):
 
 	"""Serializer for the CartItem model."""
 
-	cart = CartSerializer(read_only=True)
-	product = ProductSerializer(read_only=True)
+	# cart = CartSerializer(read_only=True)
+	# product = CartProductSerializer(read_only=True)
 
 	class Meta:
 		model = CartItem
 		fields = (
-			'product', 'quantity', 'cart'
+			'id' ,'product', 'quantity',
 		)
 
 	def create(self, validated_data):
