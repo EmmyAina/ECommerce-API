@@ -27,7 +27,6 @@ class CouponSerializer(serializers.ModelSerializer):
 
 class PaymentDetailSerializer(serializers.Serializer):
 	cardnumber = serializers.CharField(max_length=16)
-	email = serializers.CharField(max_length=255)
 	cvv = serializers.CharField(max_length=3)
 	exp_month = serializers.CharField(max_length=2)
 	exp_year = serializers.CharField(max_length=4)
