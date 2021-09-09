@@ -135,21 +135,24 @@ class MakePaymentView(generics.CreateAPIView):
 		return CartItem.objects.filter(cart_id=cart)
 
 	def post(self, request):
-		details = request.data
-		details.pop('email')
-		cart = Cart.objects.get(customer=request.user)
-		final_checkout = CheckedOutOrder.objects.get(cart_id=cart)
-		final_price = final_checkout.discounted_total
+		response = Response()
 
-		card_token = StripePaymentGateway.generate_card_token(**details,)
-		payment = StripePaymentGateway.create_payment_charge(card_token, final_price)
-		
-		if payment == True:
-			response = Response()
-			response.data = {
-				'status':200,
-				'message':"Payment Successful!",
-			}
-			final_checkout.success = True
-			final_checkout.save()
+		details = request.data
+		cart = Cart.objects.get(customer=request.user)
+		cart_items = CartItem.objects.filter(cart_id=cart)		
+		if not cart_items.exists():
+			response.data = {'details': "Your cart is currently empty"}
+		else:
+			final_checkout = CheckedOutOrder.objects.get(cart_id=cart)
+
+			final_price = final_checkout.discounted_total
+
+			card_token = StripePaymentGateway.generate_card_token(**details,)
+			payment = StripePaymentGateway.create_payment_charge(card_token, final_price)
+			
+			if payment == True:
+				response.data = {'status':200,'message':"Payment Successful!",}
+				final_checkout.success = True
+				final_checkout.save()
+
 		return response
