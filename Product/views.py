@@ -9,7 +9,7 @@ from core.custompermissions import IsAdminOrReadOnly
 class ProductViewSet(ModelViewSet):
 	my_tags = ['Product']
 	permission_classes = (IsAdminOrReadOnly,)
-	# parser_classes = (FormParser, MultiPartParser)
+	parser_classes = (FormParser, MultiPartParser)
 
 	queryset = Product.objects.all()
 	filter_backends = [SearchFilter, OrderingFilter]
