@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from Cart.models import Cart
 from .serializers import ApplyCouponSerializer, CouponSerializer,PaymentDetailSerializer
-from rest_framework import generics
+from rest_framework.generics import GenericAPIView
 from .stripe_api import StripePaymentGateway
 from rest_framework.exceptions import AuthenticationFailed
 from Cart.models import Cart, CartItem
@@ -12,7 +12,8 @@ from Cart.serializers import CartItemSerializer
 from Checkout.models import Coupon, CheckedOutOrder
 from .helper import AmountCalculationHelper, CheckoutHelper
 
-class CheckoutCartItems(generics.ListAPIView):
+
+class CheckoutCartItems(GenericAPIView):
 	permission_classes = (IsAuthenticated,)
 	serializer_class = ApplyCouponSerializer
 	my_tags = ['Checkout']
@@ -38,7 +39,8 @@ class CheckoutCartItems(generics.ListAPIView):
 			response.data['total'] = sub_total
 		return(response)
 
-class CouponViewsSet(generics.ListAPIView):
+
+class CouponViewsSet(GenericAPIView):
 	permission_classes = (AllowAny,)
 	serializer_class = CouponSerializer
 	my_tags = ['Checkout']
@@ -65,7 +67,8 @@ class CouponViewsSet(generics.ListAPIView):
 
 		return(response)
 
-class Checkout(generics.CreateAPIView):
+
+class Checkout(GenericAPIView):
 	permission_classes = (IsAuthenticated,)
 	serializer_class = ApplyCouponSerializer
 	my_tags = ['Checkout']
@@ -125,7 +128,8 @@ class Checkout(generics.CreateAPIView):
 			response.data['cart'] = "You have no item in your cart"
 		return response
 
-class MakePaymentView(generics.CreateAPIView):
+
+class MakePaymentView(GenericAPIView):
 	permission_classes = (IsAuthenticated,)
 	serializer_class = PaymentDetailSerializer
 	my_tags = ['Checkout']
