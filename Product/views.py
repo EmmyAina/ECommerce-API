@@ -7,9 +7,9 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from core.custompermissions import IsAdminOrReadOnly
 
 class ProductViewSet(ModelViewSet):
-	my_tags = ['Product']
+	my_tags = ['Category']
 	permission_classes = (IsAdminOrReadOnly,)
-	# parser_classes = (FormParser, MultiPartParser)
+	parser_classes = (FormParser, MultiPartParser)
 
 	queryset = Product.objects.all()
 	filter_backends = [SearchFilter, OrderingFilter]

@@ -26,13 +26,7 @@ class RegisterView(GenericAPIView):
 			'message': "Account created successfully",
 		}
 		response.status = status.HTTP_201_CREATED
-
-		# New User
-		# Create Cart for newly registered user
-		new_user = User.objects.get(id=serialized_data.data['id'])
-		user_cart = Cart(customer=new_user)
-		user_cart.save()
-
+		
 		return response
 
 class UpdateBioViewSet(ModelViewSet):

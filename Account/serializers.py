@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, UserBio
+from Cart.models import Cart
 
 
 class UserBioSerializers(serializers.ModelSerializer):
@@ -29,4 +30,8 @@ class UserSerializers(serializers.ModelSerializer):
 		if password != None:
 			user_instance.set_password(password)
 		user_instance.save()
+		
+		# Create a cart for the new user
+		new_cart = Cart(id=user_instance)
+		new_cart.save()
 		return user_instance

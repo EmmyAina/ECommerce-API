@@ -1,8 +1,19 @@
-from Checkout.models import Coupon
+from Checkout.models import Coupon, CheckedOutOrder
 from rest_framework import serializers
+from Cart.serializers import CartSerializer
 from Cart.models import CartItem
 
 
+class CouponSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Coupon
+		fields = ("code", "description",)
+
+class CheckedOutSerializer(serializers.ModelSerializer):
+	cart = CartSerializer(read_only=True)
+	class Meta:
+		model = CheckedOutOrder
+		fields = "__all__"
 class ApplyCouponSerializer(serializers.ModelSerializer):
     coupon = serializers.CharField(max_length=7)
 
@@ -19,11 +30,6 @@ class ApplyCouponSerializer(serializers.ModelSerializer):
         data['coupon_value'] = coupoun_value
 
         return data
-
-class CouponSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Coupon
-		fields = '__all__'
 
 class PaymentDetailSerializer(serializers.Serializer):
 	cardnumber = serializers.CharField(max_length=16)

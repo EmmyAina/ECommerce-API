@@ -15,6 +15,8 @@ class Coupon(models.Model):
 	one_time_use = models.BooleanField(default=True)
 	date_added = models.DateTimeField(auto_now=True)
 	expiry_date = models.DateTimeField()
+	class Meta:
+		ordering = ['-date_added']
 
 	def __str__(self):
 		return self.code
@@ -51,11 +53,15 @@ class CheckedOutOrder(models.Model):
 	coupon_applied = models.ForeignKey(Coupon, on_delete=models.CASCADE, default=None, blank=True, null=True)
 	sub_total = models.DecimalField(max_digits=10, decimal_places=2)
 	discounted_total = models.DecimalField(max_digits=10, decimal_places=2)
+	date_placed = models.DateField(auto_now=True)
 
 	success = models.BooleanField(default=False)
 
+	class Meta:
+   		ordering = ['-date_placed']
+
 	def __str__(self):
-		return f'{self.cart.customer.email} OrderPlaced: {self.success}'
+		return f'{self.cart.id.email} OrderPlaced: {self.success}'
 
 class TrackCoupon(models.Model):
 	customer = models.ForeignKey(User, on_delete=models.CASCADE)

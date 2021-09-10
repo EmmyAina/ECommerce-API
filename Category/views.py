@@ -5,8 +5,8 @@ from rest_framework.permissions import AllowAny
 from .models import Category
 from .serializers import CategorySerializer
 from core.custompermissions import IsAdminOrReadOnly
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 class CategoryViewSet(ModelViewSet):
@@ -18,7 +18,7 @@ class CategoryViewSet(ModelViewSet):
 	serializer_class = CategorySerializer
 
 
-class ProductinCategoryView(APIView):
+class ProductsinCategoryView(GenericAPIView):
 
 	"""
 	APIView for retrieving a list of Products that belongs to a Category
