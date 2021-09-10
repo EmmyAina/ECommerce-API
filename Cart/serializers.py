@@ -10,12 +10,12 @@ class CartSerializer(serializers.ModelSerializer):
 
 	"""Serializer for the Cart model."""
 
-	customer = UserSerializers(read_only=True)
+	id = UserSerializers(read_only=True)
 
 	class Meta:
 		model = Cart
 		fields = (
-			'id', 'customer', 'created_at', 'updated_at',
+			'id', 'created_at', 'updated_at',
 		)
 
 
@@ -43,8 +43,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 	def create(self, validated_data):
 
-		validated_data['cart'] = Cart.objects.get(customer_id=self.context['request'].user)
-		print(Cart.objects.get(customer_id=self.context['request'].user))
+		validated_data['cart'] = Cart.objects.get(id=self.context['request'].user)
 		cartItem_instance = self.Meta.model(**validated_data)
 		cartItem_instance.save()
 		return cartItem_instance
