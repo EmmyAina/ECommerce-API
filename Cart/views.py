@@ -9,5 +9,4 @@ class CartViewSet(ModelViewSet):
 	queryset = CartItem.objects.all()
 
 	def get_queryset(self):
-		cart= Cart.objects.get(customer_id=self.request.user.id)
-		return self.queryset.filter(cart_id=cart)
+		return self.queryset.filter(cart=Cart.objects.get(id=self.request.user))
