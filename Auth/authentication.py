@@ -37,7 +37,7 @@ class Authentication(BaseAuthentication):
 		if not token:
 			raise AuthenticationFailed('No User Logged in')
 		try:
-			payload = jwt.decode(token, config("ECOMMSECRETKEY"), algorithms="HS256")
+			payload = jwt.decode(token, config("ECOMM_SECRETKEY"), algorithms="HS256")
 		except jwt.ExpiredSignatureError:
 			# return None
 			raise AuthenticationFailed('Session expired, Login or renew your token')
