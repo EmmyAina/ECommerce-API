@@ -1,13 +1,18 @@
 import stripe
 from decouple import config
+from celery import shared_task
+from decouple import config
+from celery import Celery
+import time
 
-SECRET_KEY = config("STRIPE_SECRET_KEY")
+app = Celery('stripe_api', backend="redis", broker=config("REDIS_URL"))
 
-stripe.api_key = SECRET_KEY
+stripe.api_key = config("STRIPE_SECRET_KEY")
 
 class StripePaymentGateway():
 
 	@staticmethod
+	@app.task
 	def generate_card_token(cardnumber, exp_month, exp_year, cvv,
 							address_line1,address_state,address_country,):
 		data = stripe.Token.create(
@@ -20,6 +25,7 @@ class StripePaymentGateway():
 		return card_token
 
 	@staticmethod
+	@app.task
 	def create_payment_charge(tokenid, amount):
 
 		payment = stripe.Charge.create(
