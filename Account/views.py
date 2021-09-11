@@ -8,7 +8,7 @@ from Account.models import User, UserBio
 from Account.serializers import (UserBioSerializers,UserSerializers)
 import jwt
 from rest_framework_simplejwt.tokens import RefreshToken
-from .utils import Utils
+from core.tasks import Tasks
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from decouple import config
@@ -34,7 +34,7 @@ class RegisterView(GenericAPIView):
 		email_body = f"Hi {user.username}, Use the link below to verify your email \n {abs_url}"
 		data = {"body": email_body, "subject": 'Verify your email',
                     "recepient": [user.email], "sender": config("ECOMM_MAILGUNEMAIL")}
-		Utils.send_verification_mail(data)
+		Tasks.send_verification_mail.delay(data)
 
 
 		response.data = {
