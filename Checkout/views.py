@@ -108,10 +108,10 @@ class MakePaymentView(GenericAPIView):
 			response.data = {'details': "Your cart is currently empty"}
 		else:
 			final_checkout = CheckedOutOrder.objects.get(cart_id=self.get_queryset())
-			final_price = final_checkout.discounted_total
+			final_price = int(final_checkout.discounted_total)
 
-			card_token = StripePaymentGateway.generate_card_token(**details,)
-			payment = StripePaymentGateway.create_payment_charge(card_token, final_price)
+			card_token = StripePaymentGateway.generate_card_token.delay(**details,).get()
+			payment = StripePaymentGateway.create_payment_charge.delay(card_token, final_price).get()
 			
 			if payment == True:
 				response.data = {'status':200,'message':"Payment Successful!",}
