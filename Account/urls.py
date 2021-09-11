@@ -9,6 +9,9 @@ router.register('profile', views.UpdateBioViewSet, 'bio')
 urlpatterns = [
 	path('api/v1/', include(router.urls)),
 	path(base+'signup', views.RegisterView.as_view(), name='register'),
+	path(base+'email-verify', views.VerifyEmail.as_view(), name='email-verify'),
+
+
 	# path(base+'forgot-password', views.RequestPasswordResetView.as_view(),
 	#      name='forgot-password'),
 	# path(base+'reset-password', views.ResetPasswordView.as_view(), name='reset-password'),
