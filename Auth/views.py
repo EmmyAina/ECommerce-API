@@ -14,7 +14,7 @@ from .serializers import LoginSerializers, RefreshTokenSerializers
 class LoginView(GenericAPIView):
 	permission_classes = (AllowAny,)
 
-	my_tags = ['Auth']
+	my_tags = ['User']
 	"""
 	APIView for logging in user by checking the details provided and
 	encoding the data with jwt then storing the encoded information
@@ -44,13 +44,13 @@ class LoginView(GenericAPIView):
 					)
 			return response
 
-		# if not user.verified:
-		# 	response = Response(
-        #             {'success': False,
-        #              "error": "Please confirm your account with the otp before attempting to login", },
-        #             status=status.HTTP_403_FORBIDDEN
-        #         )
-		# 	return response
+		if not user.verified:
+			response = Response(
+                            {'status': status.HTTP_403_FORBIDDEN,
+                     "error": "Please Verify your email before attempting to login", },
+                    status=status.HTTP_403_FORBIDDEN
+                )
+			return response
 
 		try:
 			TokenModel.objects.filter(user_id=user.id).delete()
@@ -73,7 +73,7 @@ class LoginView(GenericAPIView):
 
 
 class RefreshTokenView(GenericAPIView):
-	my_tags = ['Auth']
+	my_tags = ['User']
 	serializer_class = RefreshTokenSerializers
 	permission_classes = (AllowAny,)
 
