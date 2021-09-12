@@ -1,0 +1,53 @@
+name: ECommerce-API
+
+on:
+  push:
+    branches: [ main, simplified]
+  pull_request:
+    branches: [ main, simplified ]
+env:
+  ECOMMUSER: ${{secrets.ECOMMUSER}}
+  ECOMMPASSWORD: ${{secrets.ECOMMPASSWORD}}
+  ECOMMNAME: ${{secrets.ECOMMNAME}}
+  ECOMM_SECRETKEY: ${{secrets.ECOMM_ECRETKEY}}
+  ECOMM_MAILGUNPASSWORD: ${{secrets.ECOMM_MAILGUNPASSWORD}}
+  ECOMM_MAILGUNEMAIL: ${{secrets.ECOMM_MAILGUNEMAIL}}
+  REDIS_URL: ${{secrets.REDIS_URL}}
+  CLOUD_API_KEY: ${{secrets.CLOUD_API_KEY}}
+  CLOUD_API_SECRET: ${{secrets.CLOUD_API_SECRET}}
+  CLOUD_NAME: ${{secrets.CLOUD_NAME}}
+  CLOUDINARY_URL: ${{secrets.CLOUDINARY_URL}}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions_db
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: psycopg2 prerequisite
+      run: sudo apt-get install libpq-dev
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Tests
+      run: |
+        python manage.py migrate
+        python manage.py test
