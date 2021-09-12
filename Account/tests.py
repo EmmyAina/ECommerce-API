@@ -1,5 +1,5 @@
 from rest_framework import status
-from Test.test_setup import TestSetup,set_to_admin
+from Test.test_setup import TestSetup,set_to_admin,verify
 from Auth.models import TokenModel
 from faker import Faker
 # Create your tests here.
@@ -16,6 +16,7 @@ class Auth_TestCase(TestSetup):
 
 	def test_user_can_login(self):
 		self.client.post(self.register_url, self.register_data)
+		verify(self.register_data['email'])
 		set_to_admin(self.register_data['email'])
 		login_response = self.client.post(self.login_url, self.login_data)
 		token = login_response.data['access']
@@ -43,6 +44,7 @@ class Auth_TestCase(TestSetup):
 
 	def test_token_creation(self):
 		self.client.post(self.register_url, self.register_data)
+		verify(self.register_data['email'])
 		set_to_admin(self.register_data['email'])
 		login_response = self.client.post(self.login_url, self.login_data)
 		token = login_response.data['access']
