@@ -6,13 +6,16 @@ from django.urls import reverse
 
 def set_to_admin(email):
 	user = User.objects.get(email=email)
-	user.is_superuser = True
-	user.is_staff = True
-	user.verified = True
-
+	user.is_superuser, user.is_staff = (True,True)
 	user.save()
 	return user
 
+
+def verify(email):
+	user = User.objects.get(email=email)
+	user.verified = True
+	user.save()
+	return user
 
 class TestSetup(APITestCase):
 	def setUp(self):
@@ -28,14 +31,14 @@ class TestSetup(APITestCase):
 		self.login_url = reverse('login')
 		self.login_data = {"email": email,"password": password}
 
-		# self.category_url = reverse('category')
-		# self.category_data = {"category_name": "Sport"}
+		self.category_url = reverse('category-list')
+		self.category_data = {"category_name": "Sport"}
 
-		# self.product_url = reverse('product')
-		# self.product_data = {"product_name": fake_detail.text(),"product_price_ngn": fake_detail.text(),
-		# "product_description": fake_detail.text(),"available_inventory": int(fake_detail.numerify()),
+		self.product_url = reverse('product-list')
+		self.product_data = {"product_name": fake_detail.text(max_nb_chars=7), "product_price_ngn": int(fake_detail.numerify()),
+		"product_description": fake_detail.text(),"available_inventory": int(fake_detail.numerify()),
 		# "product_image": '/ home/emmanuel/Emmanuel/Serious Projects/Construction-Store/profile_pics/user-avatar.png',
-		# "category": 1}
+		"category": 1}
 
 		return super().setUp()
 
