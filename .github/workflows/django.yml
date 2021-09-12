@@ -17,6 +17,9 @@ env:
   CLOUD_API_SECRET: ${{secrets.CLOUD_API_SECRET}}
   CLOUD_NAME: ${{secrets.CLOUD_NAME}}
   CLOUDINARY_URL: ${{secrets.CLOUDINARY_URL}}
+  STRIPE_SECRET_KEY: ${{secrets.STRIPE_SECRET_KEY}}
+  STRIPE_PUBLISHABLE_KEY: ${{secrets.STRIPE_PUBLISHABLE_KEY}}
+  
 
 jobs:
   build:
