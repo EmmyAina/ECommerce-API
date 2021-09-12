@@ -38,5 +38,4 @@ class Categories_TestCase(TestSetup):
 
 	def test_get_categories_without_login(self):
 		response = self.client.get(self.category_url)
-		print(response.data)
 		return self.assertEqual(response.status_code, 200)
