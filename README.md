@@ -1,4 +1,4 @@
-# ECommerce-API
+# ECommerce-API [![ECommerce-API](https://github.com/AinaEmmanuel/ECommerce-API/actions/workflows/django.yml/badge.svg)](https://github.com/AinaEmmanuel/ECommerce-API/actions/workflows/django.yml)
 Djano REST E-Commerce API with stripe payment integration
 #### Functionalities
  - Product
