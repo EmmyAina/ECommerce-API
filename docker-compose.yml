@@ -5,10 +5,10 @@ services:
     volumes:
       - .:/ecommerce-api
     ports:
-      - 8080:8080
+      - 8000:8000
     image: app:ecommerce
     container_name: ecommerce_container
-    command: python manage.py runserver 0.0.0.0:8080
+    command: python manage.py runserver 0.0.0.0:8000
     environment: 
       - CELERY_BROKER=${REDIS_URL}
       - CELERY_RESULT_BACKEND=${REDIS_URL}
