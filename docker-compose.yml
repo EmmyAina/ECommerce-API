@@ -9,8 +9,13 @@ services:
     image: app:ecommerce
     container_name: ecommerce_container
     command: python manage.py runserver 0.0.0.0:8080
+    environment: 
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
     depends_on: 
       - ecomm_db
+      - redis
+  
   ecomm_db:
     image: postgres
     environment:
@@ -21,6 +26,18 @@ services:
       - pgdata:/var/lib/posgresql/data
     ports:
        - 5431:5431
+
+  celery:
+    build: .
+    command: celery -A core worker -l info
+    volumes:
+      - .:/usr/src/app
+    depends_on: 
+      - app
+      - redis
+  
+  redis:
+    image: "redis:6.0.15"
 
 volumes:
   pgdata:
