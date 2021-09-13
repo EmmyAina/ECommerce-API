@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    volumes:
+      - .:/ecommerce-api
+    ports:
+      - 8080:8080
+    image: app:ecommerce
+    container_name: ecommerce_container
+    command: python manage.py runserver 0.0.0.0:8080
+    depends_on: 
+      - ecomm_db
+  ecomm_db:
+    image: postgres
+    environment:
+      POSTGRES_USER: emmanuel
+      POSTGRES_DB: constructionstore
+      POSTGRES_PASSWORD: inioluwa1
+    volumes:
+      - pgdata:/var/lib/posgresql/data
+    ports:
+       - 5431:5431
+
+volumes:
+  pgdata:
