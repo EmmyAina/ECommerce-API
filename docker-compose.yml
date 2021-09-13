@@ -10,8 +10,8 @@ services:
     container_name: ecommerce_container
     command: python manage.py runserver 0.0.0.0:8080
     environment: 
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+      - CELERY_BROKER=${REDIS_URL}
+      - CELERY_RESULT_BACKEND=${REDIS_URL}
     depends_on: 
       - ecomm_db
       - redis
@@ -19,9 +19,9 @@ services:
   ecomm_db:
     image: postgres
     environment:
-      POSTGRES_USER: emmanuel
-      POSTGRES_DB: constructionstore
-      POSTGRES_PASSWORD: inioluwa1
+      POSTGRES_USER: ${ECOMMUSER}
+      POSTGRES_DB: ${ECOMMNAME}
+      POSTGRES_PASSWORD: ${ECOMMPASSWORD}
     volumes:
       - pgdata:/var/lib/posgresql/data
     ports:
@@ -41,3 +41,4 @@ services:
 
 volumes:
   pgdata:
+ 
