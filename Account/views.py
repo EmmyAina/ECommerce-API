@@ -2,7 +2,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.parsers import FormParser, MultiPartParser
 from Account.models import User, UserBio
 from Account.serializers import (UserBioSerializers,UserSerializers)
@@ -73,6 +73,15 @@ class VerifyEmail(GenericAPIView):
 			response.status = status.HTTP_400_BAD_REQUEST
 
 			return response
+class User(ReadOnlyModelViewSet):
+	my_tags = ['User']
+	permission_classes = (IsAuthenticated, )
+	serializer_class = UserSerializers
+	queryset = User.objects.all()
+
+	def get_queryset(self):
+		return self.queryset.filter(id=self.request.user.id)
+
 
 class UpdateBioViewSet(ModelViewSet):
 	my_tags = ['User-Profile']

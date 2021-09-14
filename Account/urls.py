@@ -4,7 +4,10 @@ from . import views
 base = 'api/v1/account/'
 
 router = DefaultRouter()
-router.register('profile', views.UpdateBioViewSet, 'bio')
+# router.register('profile', views.UpdateBioViewSet, 'bio')
+router.register('user', views.User, 'user-info')
+
+
 
 urlpatterns = [
 	path('api/v1/', include(router.urls)),
