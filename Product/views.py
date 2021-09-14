@@ -5,12 +5,13 @@ from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.parsers import FormParser, MultiPartParser
 from core.custompermissions import IsAdminOrReadOnly
+from .pagination import CustomPagination
 
 class ProductViewSet(ModelViewSet):
 	my_tags = ['Category']
 	permission_classes = (IsAdminOrReadOnly,)
 	parser_classes = (FormParser, MultiPartParser)
-
+	pagination_class = CustomPagination
 	queryset = Product.objects.all()
 	filter_backends = [SearchFilter, OrderingFilter]
 	search_fields = ('product_name', 'product_description')
