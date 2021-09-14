@@ -22,16 +22,10 @@ $ source myenv/bin/activate
 ```
 copy all variables from env_example.txt to .env and fill appropriately
 ```
-##### Setup Postgres Database
+## Devlopment Setup
 ```
-> CREATE DATABASE database_name;
-> CREATE USER username WITH PASSWORD 'password';
-> GRANT ALL PRIVILEGES ON DATABASE database_name TO username;
-> ALTER USER username CREATEDB;
+docker-compose build
 ```
-##### Setting up Virtual Environment
 ```
-$ python manage.py makemigrations
-$ python manage.py migrate
-$ python mana.py runserver
+docker-compose up
 ```
