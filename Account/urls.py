@@ -5,7 +5,7 @@ base = 'api/v1/account/'
 
 router = DefaultRouter()
 # router.register('profile', views.UpdateBioViewSet, 'bio')
-router.register('user', views.User, 'user-info')
+router.register('user', views.UserView, 'user-info')
 
 
 

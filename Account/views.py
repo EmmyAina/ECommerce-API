@@ -73,7 +73,7 @@ class VerifyEmail(GenericAPIView):
 			response.status = status.HTTP_400_BAD_REQUEST
 
 			return response
-class User(ReadOnlyModelViewSet):
+class UserView(ReadOnlyModelViewSet):
 	my_tags = ['User']
 	permission_classes = (IsAuthenticated, )
 	serializer_class = UserSerializers
