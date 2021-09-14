@@ -24,8 +24,13 @@ copy all variables from env_example.txt to .env and fill appropriately
 ```
 ## Devlopment Setup
 ```
-docker-compose build
+$ docker-compose build
 ```
+
 ```
-docker-compose up
+$ docker-compose exec app python manage.py migrate
+```
+
+```
+$ docker-compose up
 ```
