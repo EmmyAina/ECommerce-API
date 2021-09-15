@@ -8,6 +8,11 @@ from core.custompermissions import IsAdminOrReadOnly
 from .pagination import CustomPagination
 
 class ProductViewSet(ModelViewSet):
+	"""
+	This viewset automatically provides 'list', 'create', 'retrieve', 'update', and 'destroy' actions for products
+
+	Viewset for Products endpoint
+	"""
 	my_tags = ['Category']
 	permission_classes = (IsAdminOrReadOnly,)
 	parser_classes = (FormParser, MultiPartParser)

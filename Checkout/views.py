@@ -15,6 +15,11 @@ from .helper import AmountCalculationHelper, CheckoutHelper
 
 ##---------------ViewSet to retrieve active coupons and description ---------------
 class CouponViewSet(ReadOnlyModelViewSet):
+	"""
+	Endpoint for checking the list of currently active coupons
+	
+	#
+	"""
 	my_tags = ['Checkout']
 	queryset = Coupon.objects.all()
 	serializer_class = CouponSerializer
@@ -24,6 +29,11 @@ class CouponViewSet(ReadOnlyModelViewSet):
 
 #---------------Viewset to retrieve checked out cart ---------------
 class CheckedOutItemsViewset(ReadOnlyModelViewSet):
+	"""
+	Endpoint for viewing the items a user has checked out in their cart
+	
+	#
+	"""
 	my_tags = ["Checkout"]
 	queryset = CheckedOutOrder.objects.all()
 	serializer_class = CheckedOutSerializer
@@ -32,18 +42,26 @@ class CheckedOutItemsViewset(ReadOnlyModelViewSet):
 		return self.queryset.get(cart_id =self.request.user.id)
 	
 	def list(self, request, *args, **kwargs):
-		instance = self.get_queryset()
-		serializer = self.get_serializer(instance)
-		response = Response()
-		response.data = serializer.data
-		items = CartItem.objects.filter(cart_id=self.request.user.id)
-		ser_items = CartItemSerializer(items,many=True)
-		response.data['products'] = ser_items.data
+		try:
+			instance = self.get_queryset()
+			serializer = self.get_serializer(instance)
+			response = Response()
+			response.data = serializer.data
+			items = CartItem.objects.filter(cart_id=self.request.user.id)
+			ser_items = CartItemSerializer(items,many=True)
+			response.data['products'] = ser_items.data
+		except CheckedOutOrder.DoesNotExist:
+			return Response({'detail':"You haven't checked out any items"})
 
 		return response
 
 #---------------APIView to apply coupon and checkout a user cart ---------------
 class Checkout(GenericAPIView):
+	"""
+	Endpoint for checking out items a user has in their cart
+	
+	#
+	"""
 	permission_classes = (IsAuthenticated,)
 	serializer_class = ApplyCouponSerializer
 	my_tags = ['Checkout']
@@ -91,6 +109,11 @@ class Checkout(GenericAPIView):
 
 #---------------APIView to make payment through stripe ---------------
 class MakePaymentView(GenericAPIView):
+	"""
+	Endpoint for placing an order
+	
+	#
+	"""
 	permission_classes = (IsAuthenticated,)
 	serializer_class = PaymentDetailSerializer
 	my_tags = ['Checkout']

@@ -13,6 +13,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from decouple import config
 class RegisterView(GenericAPIView):
+	"""
+	Endpoint for Registering a new user
+	
+	#
+	"""
 	my_tags = ['User']
 	permission_classes = (AllowAny,)
 	serializer_class = UserSerializers
@@ -47,6 +52,11 @@ class RegisterView(GenericAPIView):
 		return response
 
 class VerifyEmail(GenericAPIView):
+	"""
+	Endpoint for verifying a new user's email address before login
+	
+	This endpoint send a verification link to the registered email address
+	"""
 	my_tags = ['User']
 
 	def get(self, request):
@@ -74,6 +84,11 @@ class VerifyEmail(GenericAPIView):
 
 			return response
 class UserView(ReadOnlyModelViewSet):
+	"""
+	Endpoint for getting the current user's account details
+	
+	Operation can be carried out only logged in user.
+	"""
 	my_tags = ['User']
 	permission_classes = (IsAuthenticated, )
 	serializer_class = UserSerializers

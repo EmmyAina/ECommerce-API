@@ -11,6 +11,11 @@ from rest_framework.response import Response
 from Product.pagination import CustomPagination
 
 class CategoryViewSet(ModelViewSet):
+	"""
+	This viewset automatically provides 'list','create','retrieve','update',and 'destroy' actions for category
+
+	Viewset for Category endpoint
+	"""
 	my_tags = ['Category']
 	permission_classes = (IsAdminOrReadOnly,)
 	pagination_class = CustomPagination
@@ -23,8 +28,9 @@ class CategoryViewSet(ModelViewSet):
 class ProductsinCategoryView(GenericAPIView):
 
 	"""
-	APIView for retrieving a list of Products that belongs to a Category
+	Endpooint for retrieving a list of Products that belongs to a Category
 	by the category id.
+
 	Operation can be carried out any user.
 	"""
 	my_tags = ['Category']

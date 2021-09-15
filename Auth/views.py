@@ -12,14 +12,14 @@ from .serializers import LoginSerializers, RefreshTokenSerializers
 
 
 class LoginView(GenericAPIView):
+	"""
+	Endpoint to log in a user
+
+	#
+	"""
 	permission_classes = (AllowAny,)
 
 	my_tags = ['User']
-	"""
-	APIView for logging in user by checking the details provided and
-	encoding the data with jwt then storing the encoded information
-	in cookies.
-	"""
 	serializer_class = LoginSerializers
 
 	def post(self, request):
@@ -73,6 +73,11 @@ class LoginView(GenericAPIView):
 
 
 class RefreshTokenView(GenericAPIView):
+	"""
+	Endpoint to refresh a token before expiration
+
+	#
+	"""
 	my_tags = ['User']
 	serializer_class = RefreshTokenSerializers
 	permission_classes = (AllowAny,)
