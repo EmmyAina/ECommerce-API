@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,7 +114,7 @@ else:
 				'NAME': config("ECOMMNAME"),
 				'USER': config("ECOMMUSER"),
 				'PASSWORD': config("ECOMMPASSWORD"),
-				'HOST': "ecomm_db",
+				'HOST': "localhost",
 				'PORT': '5432',
 				'TEST': {
 				    'NAME': 'first_test_db',
@@ -213,3 +214,5 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Lagos'
+
+django_heroku.settings(locals())
