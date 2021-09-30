@@ -11,6 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from core.tasks import Tasks
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
+from rest_framework.parsers import FormParser, MultiPartParser
 from decouple import config
 class RegisterView(GenericAPIView):
 	"""
@@ -20,6 +21,7 @@ class RegisterView(GenericAPIView):
 	"""
 	my_tags = ['User']
 	permission_classes = (AllowAny,)
+	parser_classes = (FormParser, MultiPartParser)
 	serializer_class = UserSerializers
 
 	def post(self, request):
