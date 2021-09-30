@@ -5,7 +5,7 @@ from decouple import config
 from celery import Celery
 import time
 
-app = Celery('stripe_api', backend="redis", broker=config("REDIS_URL"))
+app = Celery('stripe_api', backend=config("REDIS_URL"), broker=config("REDIS_URL"))
 
 stripe.api_key = config("STRIPE_SECRET_KEY")
 

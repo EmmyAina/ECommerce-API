@@ -5,7 +5,7 @@ from decouple import config
 from celery import Celery
 import time
 
-app = Celery('tasks', backend="redis", broker=config("REDIS_URL"))
+app = Celery('tasks', broker=config("REDIS_URL"), broker=config("REDIS_URL"))
 
 
 class Tasks:
