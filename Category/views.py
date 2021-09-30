@@ -8,6 +8,7 @@ from core.custompermissions import IsAdminOrReadOnly
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from Product.pagination import CustomPagination
 
 class CategoryViewSet(ModelViewSet):
 	"""
@@ -33,7 +34,7 @@ class ProductsinCategoryView(GenericAPIView):
 	"""
 	my_tags = ['Category']
 	permission_classes = (AllowAny,)
-
+	pagination_class = CustomPagination
 	def get(self, request, id):
 		product = Product.objects.filter(category=id)
 
