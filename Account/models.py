@@ -22,6 +22,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 	password = models.CharField(max_length=255, null=True)
 	gender = models.CharField(max_length=50, choices=GENDER, blank=True)
 	is_staff = models.BooleanField(default=False)
+	profile_picture = models.ImageField(
+            upload_to='staticfiles', default='./staticfiles/user-avatar.png')
 	date_joined = models.DateTimeField(auto_now_add=True, null=True)
 	verified = models.BooleanField(default=False)
 

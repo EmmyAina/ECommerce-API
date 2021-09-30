@@ -21,6 +21,7 @@ class RegisterView(GenericAPIView):
 	my_tags = ['User']
 	permission_classes = (AllowAny,)
 	serializer_class = UserSerializers
+	parser_classes = (FormParser, MultiPartParser)
 
 	def post(self, request):
 		response = Response()
