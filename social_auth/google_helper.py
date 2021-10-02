@@ -11,9 +11,8 @@ class Google:
 		Validate and fetch user info from Oauth2 api
 		"""
 
-		id_info = id_token.verify_oauth2_token(token, requests.Request())
-
 		try:
+			id_info = id_token.verify_oauth2_token(token, requests.Request())
 			if 'accounts.google.com' in id_info['iss']:
 				return id_info
 		except:
