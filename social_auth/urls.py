@@ -3,5 +3,5 @@ from .views import GoogleSocialAuthView
 from django.urls import path
 
 urlpatterns = [
-	path("google/", GoogleSocialAuthView.as_view())
+	path("api/v1/social_auth/google/", GoogleSocialAuthView.as_view())
 ]

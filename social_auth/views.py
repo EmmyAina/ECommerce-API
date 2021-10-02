@@ -5,6 +5,7 @@ from rest_framework import status
 
 # Create your views here.
 class GoogleSocialAuthView(GenericAPIView):
+	my_tags = ["Social Auth"]
 	serializer_class = GoogleAuthSerializers
 
 	def post(self, request):
