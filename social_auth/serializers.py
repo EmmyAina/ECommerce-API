@@ -15,8 +15,8 @@ class GoogleAuthSerializers(serializers.Serializer):
 			raise serializers.ValidationError(
 				"Invalid or expired token, please try again"
 			)
-		if user_data['aud'] != config('GOOGLE_CLIENT_ID'):
-			raise AuthenticationFailed("This request was not made from the platform, please contact admin")
+		# if user_data['aud'] != config('GOOGLE_CLIENT_ID'):
+		# 	raise AuthenticationFailed("This request was not made from the platform, please contact admin")
 
 		user_id = user_data['sub']
 		email = user_data['email']
