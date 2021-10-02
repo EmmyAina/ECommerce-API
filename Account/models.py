@@ -13,6 +13,8 @@ GENDER = (
 	('Others', 'Others'),
 )
 
+AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google',
+				  'twitter': 'twitter', 'email': 'email'}
 
 class User(AbstractBaseUser, PermissionsMixin):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -23,9 +25,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 	gender = models.CharField(max_length=50, choices=GENDER, blank=True)
 	is_staff = models.BooleanField(default=False)
 	profile_picture = models.ImageField(
-            upload_to='staticfiles', default='./staticfiles/user-avatar.png')
+			upload_to='staticfiles', default='./staticfiles/user-avatar.png')
 	date_joined = models.DateTimeField(auto_now_add=True, null=True)
 	verified = models.BooleanField(default=False)
+	auth_provider = models.CharField(
+		max_length=255, blank=False,
+		null=False, default=AUTH_PROVIDERS.get('email'))
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = []

@@ -48,6 +48,7 @@ urlpatterns = [
 	path("", include("Cart.urls")),
    	path("", include("Product.urls")),
    	path("", include("Checkout.urls")),
+	path("", include(("social_auth.urls", 'social_auth')), name='social_auth'),
    	*static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
 

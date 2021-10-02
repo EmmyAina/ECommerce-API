@@ -28,6 +28,14 @@ class LoginView(GenericAPIView):
 		serializer.is_valid()
 		user = User.objects.filter(email=serializer.data['email']).first()
 
+		if user.auth_provider != 'gmail':
+			response = Response(
+						{'success': False,
+                        "error": f"Please login with you {user.auth_provider} account",},
+						status=status.HTTP_403_FORBIDDEN
+					)
+			return response
+
 		if user is None:
 			response = Response(
 						{'success': False,
