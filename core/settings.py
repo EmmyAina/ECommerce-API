@@ -61,7 +61,8 @@ INSTALLED_APPS = [
 	'stripe',
    	'debug_toolbar',
    	'django_seed',
-   	'cloudinary_storage'
+   	'cloudinary_storage',
+	"social_auth",
 ]
 
 MIDDLEWARE = [
