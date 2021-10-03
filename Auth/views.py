@@ -28,7 +28,7 @@ class LoginView(GenericAPIView):
 		serializer.is_valid()
 		user = User.objects.filter(email=serializer.data['email']).first()
 
-		if user.auth_provider != 'gmail':
+		if user.auth_provider != 'email':
 			response = Response(
 						{'success': False,
                         "error": f"Please login with you {user.auth_provider} account",},
