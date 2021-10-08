@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser, Permission, Permissions
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 import uuid
+
+from Auth.serializers import required
 from .manager import UserManager
 
 default_proile_pic = ['https://bit.ly/3xA57e3']
@@ -19,7 +21,7 @@ AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google',
 class User(AbstractBaseUser, PermissionsMixin):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	email = models.EmailField(
-		_('email address'), null=True, blank=True, unique=True)
+		_('email address'), null=True, blank=False, unique=True)
 	username = models.CharField(max_length=255,)
 	password = models.CharField(max_length=255, null=True)
 	gender = models.CharField(max_length=50, choices=GENDER, blank=True)
