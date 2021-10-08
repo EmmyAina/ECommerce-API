@@ -58,7 +58,8 @@ class LoginView(GenericAPIView):
 						"error": f"Please login with you {user.auth_provider} account", },
 						status=status.HTTP_403_FORBIDDEN
 					)
-		return response
+			return response
+
 		try:
 			TokenModel.objects.filter(user_id=user.id).delete()
 			payload = Authentication.create_token_for_user(user)
