@@ -36,6 +36,14 @@ class LoginView(GenericAPIView):
 					)
 			return response
 
+		if user.auth_provider != 'email':
+			response = Response(
+						{'success': False,
+						"error": f"Please login with you {user.auth_provider} account", },
+						status=status.HTTP_403_FORBIDDEN
+					)
+			return response
+
 		if not user.check_password(serializer.data['password']):
 			response = Response(
 						{'success': False,
@@ -50,14 +58,6 @@ class LoginView(GenericAPIView):
                      "error": "Please Verify your email before attempting to login", },
                     status=status.HTTP_403_FORBIDDEN
                 )
-			return response
-
-		if user.auth_provider != 'email':
-			response = Response(
-						{'success': False,
-						"error": f"Please login with you {user.auth_provider} account", },
-						status=status.HTTP_403_FORBIDDEN
-					)
 			return response
 
 		try:
