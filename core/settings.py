@@ -118,7 +118,7 @@ else:
 				'NAME': config("ECOMMNAME"),
 				'USER': config("ECOMMUSER"),
 				'PASSWORD': config("ECOMMPASSWORD"),
-				'HOST': "localhost",
+				'HOST': "ecomm_db",
 				'PORT': '5432',
 				'TEST': {
 				    'NAME': 'first_test_db',

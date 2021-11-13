@@ -24,6 +24,9 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from graphene_django.views import GraphQLView
 from rest_framework import permissions
+from .schema import schema
+from django.views.decorators.csrf import csrf_exempt
+
 
 # from .schema import schema
 
@@ -57,6 +60,7 @@ urlpatterns += [
                                          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
                                        cache_timeout=0), name='schema-redoc'),
+	path('graphql/', csrf_exempt(GraphQLView.as_view(schema=schema, graphiql=True)) )
 ]
 
 if settings.DEBUG:
