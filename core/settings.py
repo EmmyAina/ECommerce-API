@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import redis
 from pathlib import Path
 from decouple import config
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1']
 
+REDIS_DEFAULT_CONNECTION_POOL = redis.ConnectionPool.from_url(
+    config('REDIS_URL', 'redis://localhost:6379/'))
 
 # Application definition
 
@@ -57,7 +61,8 @@ INSTALLED_APPS = [
 	'stripe',
    	'debug_toolbar',
    	'django_seed',
-   	'cloudinary_storage'
+   	'cloudinary_storage',
+	"social_auth",
 ]
 
 MIDDLEWARE = [
@@ -207,9 +212,25 @@ EMAIL_HOST_PASSWORD = config('ECOMM_MAILGUNPASSWORD')
 EMAIL_USE_TLS = True
 
 # CELERY STUFF
-BROKER_URL = config('REDIS_URL')
-CELERY_RESULT_BACKEND = config('REDIS_URL')
+BROKER_URL = config('REDIS_URL', "redis://localhost:6379/")
+CELERY_RESULT_BACKEND = config('REDIS_URL', "redis://localhost:6379/")
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Lagos'
+
+redis_host = config('REDIS_URL', 'redis://localhost:6379/')
+# Channel layer definitions
+# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+        "ROUTING": "multichat.routing.channel_routing",
+    },
+}
+
+django_heroku.settings(locals())

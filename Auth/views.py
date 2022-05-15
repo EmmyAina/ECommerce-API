@@ -25,13 +25,21 @@ class LoginView(GenericAPIView):
 	def post(self, request):
 		response, serializer = Response(), LoginSerializers(data=request.data)
 
-		serializer.is_valid()
+		serializer.is_valid(raise_exception=True)
 		user = User.objects.filter(email=serializer.data['email']).first()
 
 		if user is None:
 			response = Response(
 						{'success': False,
 						"error": "User not found", },
+						status=status.HTTP_403_FORBIDDEN
+					)
+			return response
+
+		if user.auth_provider != 'email':
+			response = Response(
+						{'success': False,
+						"error": f"Please login with you {user.auth_provider} account", },
 						status=status.HTTP_403_FORBIDDEN
 					)
 			return response

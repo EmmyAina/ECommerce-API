@@ -21,6 +21,7 @@ class CategoryViewSet(ModelViewSet):
 	queryset = Category.objects.all()
 	search_fields = ['category_name', ]
 	filter_backends = [SearchFilter, OrderingFilter]
+	pagination_class = CustomPagination
 	serializer_class = CategorySerializer
 
 

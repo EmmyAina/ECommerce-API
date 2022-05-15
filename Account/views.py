@@ -23,6 +23,7 @@ class RegisterView(GenericAPIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (FormParser, MultiPartParser)
 	serializer_class = UserSerializers
+	# parser_classes = (FormParser, MultiPartParser)
 
 	def post(self, request):
 		response = Response()

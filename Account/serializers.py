@@ -20,7 +20,7 @@ class UserBioSerializers(serializers.ModelSerializer):
 class UserSerializers(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ['id', 'email', 'username', 'gender', 'password', 'profile_picture']
+		fields = ['id', 'email', 'username', 'gender', 'password', 'profile_picture' ]
 		extra_kwargs = {'password': {'write_only': True}}
 
 	def create(self, validated_data):
